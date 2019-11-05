@@ -111,5 +111,9 @@ db.collectionName.find({distance: 12000})
 db.collectionName.find({distance: {$gt: 10000})
 # '$gt' is a condition and stands for greater than
 
+Projection
 
-
+#If we just want to display a specific field
+db.collectionName.find({}, {field: 1}).pretty()
+#the one is to include the data in the output
+#It happens on the mongo db server
