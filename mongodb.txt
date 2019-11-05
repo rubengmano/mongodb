@@ -1,0 +1,115 @@
+MongoDB Tutorial
+
+Databases have collections that contain documents
+Documents are json objects that have key-value pairs
+
+#Show databases
+show dbs
+
+#Clear console
+cls
+
+#Create or change collection
+use collectionName
+#if collection does not exist creates one, if exists change to it
+
+#Create a document
+db.collectionName.insertOne({})
+#if the collectionName does not exist it will create a new one on demand and then insert the document represented by the curly braces
+#after inserting an object we receive an acknowledged message with the id of the objected iserted
+
+#Create multiple documents
+db.collectionName.insertMany([{key: value}, {key: value}])
+
+#Example
+> db.flightData.insertMany([
+...   {
+...     "departureAirport": "MUC",
+...     "arrivalAirport": "SFO",
+...     "aircraft": "Airbus A380",
+...     "distance": 12000,
+...     "intercontinental": true
+...   },
+...   {
+...     "departureAirport": "LHR",
+...     "arrivalAirport": "TXL",
+...     "aircraft": "Airbus A320",
+...     "distance": 950,
+...     "intercontinental": false
+...   }
+... ])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("5dc18376158624bcff40a049"),
+		ObjectId("5dc18376158624bcff40a04a")
+	]
+}
+
+
+#Show a collection data
+db.collectionName.find()
+
+#Show a collection data in a pretty way, human friendly
+db.collectionName.find().pretty()
+
+JSON vs BSON
+MongoDB uses BSON
+The JSON object that is added is converted by the MongoDB drivers and transformed in BSON (Binary Data) because:
+	1 - It is more effiicient to store
+	2 - It supports additional types (ObjectId)
+	3 - We can write without quotation marks
+
+CRUD Operations
+Create, Read, Update, Delete
+
+#Create
+insertOne(data, options)
+insertMany(data, options)
+
+#Read
+find(filter, options)
+findOne(filter, options)
+#findOne returns the first matching object
+#find does not return all the data
+
+#Retrieve all the data
+db.collectionName.find().toArray()
+
+#Update
+updateOne(filter, data, options)
+updateMany(filter, data, options)
+replaceOne(filter, data, options)
+
+#Delete
+deleteOne(filter, options)
+deleteMany(filter, options)
+
+#Delete Document
+db.collectionName.deleteOne({departureAirport: "TXL"})
+#it the deletes the document with the key-value pair specified
+
+#Delete ALL Documets
+db.collectionName.deleteMany({})
+
+#Update Document
+db.collectionName.updateOne({distance: 12000}, {$set: {marker: "delete"}})
+#it's necessary to include the word set to update
+
+#Update ALL documents
+db.collectionName.updateMany({}, {$set: {marker: "delete"}})
+
+Update
+There's a difference between update and updateOne or updateMany
+update does not need the word set but when it's used it replaces the all content of the document with the new update
+The id remains the same
+If we want to replace the data we should use replaceOne or replaceMany
+
+#Find documents
+db.collectionName.find({distance: 12000})
+#Find an object with a condition
+db.collectionName.find({distance: {$gt: 10000})
+# '$gt' is a condition and stands for greater than
+
+
+
