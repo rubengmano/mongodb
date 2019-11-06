@@ -64,7 +64,20 @@ const person = new Person({
 
 // fruit.save();
 // person.save();
-Fruit.insertMany([apple, kiwi], function(err){
-  if(err) console.log(err);
-  else console.log('Succefully saved all the fruits to fruitsDB');
+// Fruit.insertMany([apple, kiwi], function(err){
+//   if(err) console.log(err);
+//   else console.log('Succefully saved all the fruits to fruitsDB');
+// });
+
+// ----------------------------------------FIND-DOCUMENTS--------------------------------------------------
+
+Fruit.find(function (err, fruits) {
+  if (err) return console.error(err);
+  else {
+    // Close connection
+    mongoose.connection.close();
+    fruits.forEach(function(element) {
+      console.log(element.name);
+    });
+  }
 });
