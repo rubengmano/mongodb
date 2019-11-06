@@ -15,8 +15,16 @@ db.once('open', function() {
 
 // Schema for every new data document
 const fruitSchema = new mongoose.Schema({
-  name: String,
-  rating: Number,
+  name: {
+    type: String,
+    required: [true, 'Name is mandatory']
+  },
+  rating: {
+    type: Number,
+    // Argumements' validation
+    min: 1,
+    max: 10
+  },
   review: String
 });
 
@@ -37,7 +45,7 @@ const Person = mongoose.model('Person', personSchema);
 // ----------------------------------------FRUITS----------------------------------------------------------
 const banana = new Fruit({
   name: 'Banana',
-  rating: 8,
+  rating: 34,
   review: 'Best yellow fruit.'
 });
 
@@ -62,7 +70,7 @@ const person = new Person({
 
 // ----------------------------------------ADD-DOCUMENTS---------------------------------------------------
 
-// fruit.save();
+// banana.save();
 // person.save();
 // Fruit.insertMany([apple, kiwi], function(err){
 //   if(err) console.log(err);
