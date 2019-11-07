@@ -31,7 +31,8 @@ const fruitSchema = new mongoose.Schema({
 // Person Schema
 const personSchema = new mongoose.Schema({
   name: String,
-  age: Number
+  age: Number,
+  favouriteFruit: fruitSchema
 });
 
 // ----------------------------------------COLLECTIONS-----------------------------------------------------
@@ -70,13 +71,13 @@ const person = new Person({
 
 // ----------------------------------------ADD-DOCUMENTS---------------------------------------------------
 
+// kiwi.save();
 // banana.save();
 // person.save();
 // Fruit.insertMany([apple, kiwi], function(err){
 //   if(err) console.log(err);
 //   else console.log('Succefully saved all the fruits to fruitsDB');
 // });
-
 // ----------------------------------------FIND-DOCUMENTS--------------------------------------------------
 
 Fruit.find(function (err, fruits) {
@@ -89,3 +90,24 @@ Fruit.find(function (err, fruits) {
     });
   }
 });
+
+// --------------------------------------UPDATE-DOCUMENTS-------------------------------------------------
+
+// Fruit.findOneAndUpdate( {rating: 7 }, {  name: "Apple" }, function(err){
+//   if(err) console.log(err);
+//   else console.log("Success");
+// } );
+
+// Before updating the schema needs to be changed
+Person.updateOne({name: 'Steve'}, {favouriteFruit: kiwi}, function(err){
+  if(err) console.log(err);
+  else console.log(`Steve's fav fruit is kiwi`);
+});
+
+
+// --------------------------------------DELETE-DOCUMENTS-------------------------------------------------
+
+// Fruit.deleteOne({name: 'Kiwi'}, function(err){
+//   if(err) console.log('err');
+//   else console.log("Deleted");
+// })
